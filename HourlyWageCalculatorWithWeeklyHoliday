@@ -1,0 +1,182 @@
+import java.util.Scanner;
+/* 
+public class SalaryCalculatorWith4Insurance {
+    @SuppressWarnings("ConvertToTryWithResources")
+    public static void main(String[] args) {
+        Scanner input = new Scanner(System.in);
+
+        System.out.print("월 급여를 입력하세요: ");
+        int salary = input.nextInt();
+
+        double nationalPension = salary * 0.045;
+        double healthInsurance = salary * 0.03545;
+        double longTermCareInsurance = healthInsurance * 0.1295;
+        double employmentInsurance = salary * 0.009;
+
+        double totalInsurance = nationalPension + healthInsurance + longTermCareInsurance + employmentInsurance;
+        double netSalary = salary - totalInsurance;
+
+        System.out.println("국민연금: " + Math.round(nationalPension) + "원");
+        System.out.println("건강보험: " + Math.round(healthInsurance) + "원");
+        System.out.println("장기요양보험: " + Math.round(longTermCareInsurance) + "원");
+        System.out.println("고용보험: " + Math.round(employmentInsurance) + "원");
+        System.out.println("총 공제액: " + Math.round(totalInsurance) + "원");
+        System.out.println("실수령액: " + Math.round(netSalary) + "원");
+        input.close();
+    }
+}
+
+
+public class SalaryCalculator {
+    public static void main(String[] args) {
+        try (Scanner scanner = new Scanner(System.in)) {
+            System.out.print("시급을 입력하세요 (원): ");
+            double hourlyRate = scanner.nextDouble();
+            
+            System.out.print("일일 근무 시간을 입력하세요: ");
+            double hoursPerDay = scanner.nextDouble();
+            
+            System.out.print("한 달 근무 일수를 입력하세요: ");
+            int daysWorked = scanner.nextInt();
+            
+            double monthlySalary = calculateSalary(hourlyRate, hoursPerDay, daysWorked);
+            
+            System.out.printf("월급: %.0f원\n", monthlySalary);
+        }
+    }
+    
+    public static double calculateSalary(double hourlyRate, double hoursPerDay, int daysWorked) {
+        double dailyWage = hourlyRate * hoursPerDay;
+        return dailyWage * daysWorked;
+    }
+}
+
+
+
+
+
+public class WeeklyHolidayAllowance {
+    public static void main(String[] args) {
+        try (Scanner scanner = new Scanner(System.in)) {
+            System.out.print("시급을 입력하세요 (원): ");
+            double hourlyRate = scanner.nextDouble();
+            
+            System.out.print("주당 근무 시간을 입력하세요: ");
+            double weeklyHours = scanner.nextDouble();
+            
+            double weeklyHolidayAllowance = calculateWeeklyHolidayAllowance(hourlyRate, weeklyHours);
+            
+            System.out.printf("주휴수당: %.0f원\n", weeklyHolidayAllowance);
+        }
+    }
+    
+    public static double calculateWeeklyHolidayAllowance(double hourlyRate, double weeklyHours) {
+        if (weeklyHours < 15) {
+            return 0;
+        }
+        
+        double dailyHours = Math.min(weeklyHours / 5, 8);
+        return hourlyRate * dailyHours;
+    }
+}
+
+
+
+
+public class HourlyWageCalculator {
+    public static void main(String[] args) {
+        try (Scanner scanner = new Scanner(System.in)) {
+            System.out.print("시급을 입력하세요 (원): ");
+            double hourlyWage = scanner.nextDouble();
+            
+            System.out.print("근무 시간을 입력하세요: ");
+            double hoursWorked = scanner.nextDouble();
+            
+            double totalSalary = hourlyWage * hoursWorked;
+            
+            // 4대보험 요율 (2024년 기준)
+            double nationalPensionRate = 0.045;
+            double healthInsuranceRate = 0.03545;
+            double longTermCareRate = 0.1281 * healthInsuranceRate;
+            double employmentInsuranceRate = 0.009;
+            
+            // 4대보험 공제액 계산
+            double nationalPension = totalSalary * nationalPensionRate;
+            double healthInsurance = totalSalary * healthInsuranceRate;
+            double longTermCare = healthInsurance * longTermCareRate;
+            double employmentInsurance = totalSalary * employmentInsuranceRate;
+            
+            double totalDeductions = nationalPension + healthInsurance + longTermCare + employmentInsurance;
+            
+            // 공제 후 실수령액 계산
+            double netSalary = totalSalary - totalDeductions;
+            
+            // 공제 후 시급 계산
+            double netHourlyWage = netSalary / hoursWorked;
+            
+            System.out.printf("총 급여: %.0f원\n", totalSalary);
+            System.out.printf("4대보험 공제액: %.0f원\n", totalDeductions);
+            System.out.printf("실수령액: %.0f원\n", netSalary);
+            System.out.printf("공제 후 시급: %.0f원\n", netHourlyWage);
+        }
+    }
+}
+*/
+
+// 주휴수당을 포함한 시급 계산
+public class HourlyWageCalculatorWithWeeklyHoliday {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        
+        System.out.print("기본 시급을 입력하세요 (원): ");  // 시급
+        double baseHourlyWage = scanner.nextDouble();
+        
+        System.out.print("주당 근무 시간을 입력하세요: ");   // 주당 근무 시간
+        double weeklyHours = scanner.nextDouble();
+        
+        // 주휴수당 계산
+        double weeklyHolidayAllowance = calculateWeeklyHolidayAllowance(baseHourlyWage, weeklyHours);
+        
+        // 총 급여 계산 (주휴수당 포함)
+        double totalSalary = (baseHourlyWage * weeklyHours) + weeklyHolidayAllowance;
+        
+        // 4대보험 요율 (2024년 기준)
+        double nationalPensionRate = 0.045;   // 국민연금
+        double healthInsuranceRate = 0.03545;                               // 건강보험
+        double longTermCareRate = 0.1281 * healthInsuranceRate;             // 장기요양보험
+        double employmentInsuranceRate = 0.009;                                                   // 고용보험
+
+        // 4대보험 공제액 계산
+        double nationalPension = totalSalary * nationalPensionRate;
+        double healthInsurance = totalSalary * healthInsuranceRate;
+        double longTermCare = healthInsurance * longTermCareRate;
+        double employmentInsurance = totalSalary * employmentInsuranceRate;
+        
+        double totalDeductions = nationalPension + healthInsurance + longTermCare + employmentInsurance;
+        
+        // 공제 후 실수령액 계산
+        double netSalary = (totalSalary - totalDeductions) ;    // 4대보험 공제액은 정수로 계산
+        
+        // 공제 후 실제 시급 계산 (주휴수당 포함)
+        double effectiveHours = weeklyHours + (weeklyHolidayAllowance / baseHourlyWage);
+        double netHourlyWage = netSalary / effectiveHours;
+        
+        System.out.printf("기본 급여: %.0f원\n", baseHourlyWage * weeklyHours);
+        System.out.printf("주휴수당: %.0f원\n", weeklyHolidayAllowance);
+        System.out.printf("총 주급여 (주휴수당 포함): %.0f원\n", totalSalary);
+        System.out.printf("4대보험 공제액: %.0f원\n", totalDeductions);
+        System.out.printf("실수령주급: %.0f원\n", netSalary);
+        System.out.printf("실제 시급 (주휴수당 포함, 4대보험 공제 후): %.0f원\n", netHourlyWage);
+        
+        scanner.close();
+    }
+    
+    public static double calculateWeeklyHolidayAllowance(double hourlyRate, double weeklyHours) {
+        if (weeklyHours < 15) {
+            return 0;
+        }
+        
+        double dailyHours = Math.min(weeklyHours / 5, 8);
+        return hourlyRate * dailyHours;
+    }
+}
